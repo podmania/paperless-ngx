@@ -17,7 +17,6 @@
         name = "paperless-ngx";
         tag = "latest";
         fromImage = base.packages.${system}.base-image;
-        copyToRoot = [ pkgs.paperless-ngx ];
         config = {
           ExposedPorts = {
             "8000/tcp" = {};
@@ -28,7 +27,7 @@
             "/export" = {};
             "/consume" = {};
           };
-          Cmd = [ "/usr/bin/paperless-ngx" ];
+          Cmd = [ "${pkgs.paperless-ngx}/bin/paperless-ngx" ];
         };
       };
 
