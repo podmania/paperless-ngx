@@ -285,3 +285,5 @@ Documentation: [docs.paperless-ngx.com](https://docs.paperless-ngx.com/)
 | `USERMAP_GID` | `1000` | GID of paperless group in container |
 | `PAPERLESS_OCR_LANGUAGES` | _(none)_ | Additional OCR languages to install (space-separated) |
 | `PAPERLESS_ENABLE_FLOWER` | _(disabled)_ | Enable Celery Flower monitoring |
+
+<a href="https://www.buymeacoffee.com/bhoehn" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
