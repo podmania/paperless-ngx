@@ -1,0 +1,28 @@
+services:
+  broker:
+    image: docker.io/library/redis:8
+    userns_mode: "keep-id"
+    container_name: paperless-broker
+    volumes:
+      - ./redisdata:/data
+    restart: unless-stopped
+
+  paperless-ngx:
+    image: ghcr.io/podmania/paperless-ngx:latest
+    userns_mode: "keep-id"
+    container_name: paperless-ngx
+    ports:
+      - 8000:8000
+    volumes:
+      - ./data:/usr/src/paperless/data
+      - ./media:/usr/src/paperless/media
+      - ./export:/usr/src/paperless/export
+      - ./consume:/usr/src/paperless/consume
+      - /etc/localtime:/etc/localtime:ro # optional: use either TZ variable or localtime mapping, not both
+    environment:
+      # https://docs.paperless-ngx.com/configuration/#PAPERLESS_EMAIL_PARSE_DEFAULT_LAYOUT
+      # simple sqlite config, can be used with a separate db container
+      - PAPERLESS_REDIS: redis://broker:6379
+      - PAPERLESS_DBENGINE: sqlite
+      # - TZ: America/New_York # optional: use either TZ variable or localtime mapping, not both
+    restart: unless-stopped
