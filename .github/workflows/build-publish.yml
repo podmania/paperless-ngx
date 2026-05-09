@@ -133,8 +133,15 @@ jobs:
           VERSION="${{ needs.check-version.outputs.new_version }}"
           IMAGE="${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}"
 
-          docker run -d --name test-main "${IMAGE}:${VERSION}-amd64"
-          sleep 5
+          docker network create test-net
+          docker run -d --name redis --network test-net redis:7-alpine
+
+          docker run -d --name test-main --network test-net \
+            -e PAPERLESS_REDIS=redis://redis:6379 \
+            -e PAPERLESS_DBENGINE=sqlite \
+            -e PAPERLESS_SECRET_KEY=test-smoke-key \
+            "${IMAGE}:${VERSION}-amd64"
+          sleep 10
           STATUS=$(docker inspect -f '{{.State.Status}}' test-main)
           if [ "$STATUS" = "exited" ]; then
             echo "::error::Main container exited immediately"
