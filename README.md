@@ -14,6 +14,7 @@ Documentation: [docs.paperless-ngx.com](https://docs.paperless-ngx.com/)
 - `/data` — Search index, SQLite DB, classification model
 - `/media` — Stored documents and thumbnails
 - `/consume` — Directory watched for new documents
+- `/export`
 
 ## Environment Variables
 
