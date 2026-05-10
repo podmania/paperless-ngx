@@ -18,11 +18,8 @@ services:
       - ./media:/usr/src/paperless/media
       - ./export:/usr/src/paperless/export
       - ./consume:/usr/src/paperless/consume
-      - /etc/localtime:/etc/localtime:ro # optional: use either TZ variable or localtime mapping, not both
+      - /etc/localtime:/etc/localtime:ro
     environment:
-      # https://docs.paperless-ngx.com/configuration/#PAPERLESS_EMAIL_PARSE_DEFAULT_LAYOUT
-      # simple sqlite config, can be used with a separate db container
-      - PAPERLESS_REDIS: redis://broker:6379
-      - PAPERLESS_DBENGINE: sqlite
-      # - TZ: America/New_York # optional: use either TZ variable or localtime mapping, not both
+      PAPERLESS_REDIS: redis://broker:6379
+      PAPERLESS_DBENGINE: sqlite
     restart: unless-stopped
