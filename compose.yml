@@ -4,7 +4,7 @@ services:
     userns_mode: "keep-id"
     container_name: paperless-broker
     volumes:
-      - ./redisdata:/data
+      - paperless_redis:/data
     restart: unless-stopped
 
   paperless-ngx:
@@ -23,3 +23,5 @@ services:
       PAPERLESS_REDIS: redis://broker:6379
       PAPERLESS_DBENGINE: sqlite
     restart: unless-stopped
+volumes:
+  paperless_redis:
