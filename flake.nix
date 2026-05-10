@@ -11,6 +11,17 @@
     system = builtins.currentSystem;
     pkgs = nixpkgs.legacyPackages.${system};
     n2c = nix2container.outputs.packages.${system}.nix2container;
+    version = "2.20.14";
+    srcHash = "sha256-xCpVABOf3rOm/PRZ5Doq8hoZVwRsII+8vFtb28eaBQ8=";
+    pkg = pkgs.paperless-ngx.overrideAttrs (old: {
+      inherit version;
+      src = pkgs.fetchFromGitHub {
+        owner = "paperless-ngx";
+        repo = "paperless-ngx";
+        rev = "v${version}";
+        hash = srcHash;
+      };
+    });
     imageConfig = {
       ExposedPorts = {
         "8000/tcp" = {};
@@ -21,7 +32,7 @@
         "/export" = {};
         "/consume" = {};
       };
-      Cmd = [ "${pkgs.paperless-ngx}/bin/paperless-ngx" ];
+      Cmd = [ "${pkg}/bin/paperless-ngx" ];
     };
   in {
     packages.${system} = {
@@ -39,11 +50,11 @@
         config = imageConfig;
       };
 
-      paperless-ngx = pkgs.paperless-ngx;
+      paperless-ngx = pkg;
 
       default = self.packages.${system}.paperless-ngx-image;
     };
-    
-    paperless-ngxVersion = pkgs.paperless-ngx.version;
+
+    paperless-ngxVersion = version;
   };
 }
