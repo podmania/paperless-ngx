@@ -13,14 +13,21 @@
     n2c = nix2container.outputs.packages.${system}.nix2container;
     version = "2.20.14";
     srcHash = "sha256-xCpVABOf3rOm/PRZ5Doq8hoZVwRsII+8vFtb28eaBQ8=";
+    src = pkgs.fetchFromGitHub {
+      owner = "paperless-ngx";
+      repo = "paperless-ngx";
+      rev = "v${version}";
+      hash = srcHash;
+    };
+    frontendPkg = pkgs.paperless-ngx.frontend.overrideAttrs (old: {
+      inherit version src;
+    });
     pkg = pkgs.paperless-ngx.overrideAttrs (old: {
-      inherit version;
-      src = pkgs.fetchFromGitHub {
-        owner = "paperless-ngx";
-        repo = "paperless-ngx";
-        rev = "v${version}";
-        hash = srcHash;
-      };
+      inherit version src;
+      installPhase = builtins.replaceStrings
+        [ (builtins.toString pkgs.paperless-ngx.frontend) ]
+        [ (builtins.toString frontendPkg) ]
+        old.installPhase;
     });
     imageConfig = {
       ExposedPorts = {
