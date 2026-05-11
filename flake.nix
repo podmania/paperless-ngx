@@ -11,8 +11,8 @@
     system = builtins.currentSystem;
     pkgs = nixpkgs.legacyPackages.${system};
     n2c = nix2container.outputs.packages.${system}.nix2container;
-    version = "2.20.14";
-    srcHash = "sha256-xCpVABOf3rOm/PRZ5Doq8hoZVwRsII+8vFtb28eaBQ8=";
+    version = "2.20.15";
+    srcHash = "sha256-Czh4Knel0IIHsTc3kEnp1153Kv+3721GRCbTYTkeCDg=";
     src = pkgs.fetchFromGitHub {
       owner = "paperless-ngx";
       repo = "paperless-ngx";
