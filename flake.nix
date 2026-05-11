@@ -24,10 +24,6 @@
     });
     pkg = pkgs.paperless-ngx.overrideAttrs (old: {
       inherit version src;
-      installPhase = builtins.replaceStrings
-        [ (builtins.toString pkgs.paperless-ngx.frontend) ]
-        [ (builtins.toString frontendPkg) ]
-        old.installPhase;
     });
     imageConfig = {
       ExposedPorts = {
