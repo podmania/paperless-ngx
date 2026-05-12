@@ -8,6 +8,5 @@ jobs:
   update:
     uses: podmania/actions/.github/workflows/update-version.yml@main
     with:
-      package: paperless-ngx
       upstream: paperless-ngx/paperless-ngx
       tag-prefix: v
